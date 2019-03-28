@@ -1,5 +1,9 @@
-FROM eu.gcr.io/bobeas-hpc/nemo/xios:v4 as xios
+FROM eu.gcr.io/bobeas-hpc/nemo/xios:latest as xios
 FROM eu.gcr.io/bobeas-hpc/debian:jessie as onbuild
+
+# Read ROOTPWD and USERPWD from --build-arg variables i.e.
+# docker build --build-arg ROOTPWD=MYROOTPWD --build-arg USERPWD=MYUSERPWD \
+#    -t eu.gcr.io/bobeas-hpc/nemo/onbuild:latest onbuild/
 
 # Based on alpine-mpich by Nikyle Nguyen <NLKNguyen@MSN.com>
 MAINTAINER Simon Holgate <hello@simonholgate.org.uk>
@@ -77,8 +81,9 @@ RUN cd /etc/ssh/ && ssh-keygen -A -N ''
 
 # Config SSH Daemon
 RUN mkdir /var/run/sshd
-RUN echo 'root:MpiPwd1' | chpasswd
-RUN echo 'mpi:MpiPwd1' | chpasswd
+# Read ROOTPWD and USERPWD from --build-arg variables
+RUN echo "root:${ROOTPWD}" | chpasswd
+RUN echo "mpi:${USERPWD}" | chpasswd
 RUN  sed -i "s/#PasswordAuthentication.*/PasswordAuthentication no/g" /etc/ssh/sshd_config \
   && sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config \
   && sed -i "s/UsePAM yes/#UsePAM yes/g" /etc/ssh/sshd_config \

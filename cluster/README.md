@@ -1,4 +1,4 @@
-Alpine MPICH Cluster
+NEMO MPICH Cluster
 ====================
 
 Scaffolding project structure for a MPI cluster using [Alpine MPICH](https://hub.docker.com/r/nlknguyen/alpine-mpich) Docker image. Architecturally compatible with *Docker Swarm Mode*. Include a runner script that automates Docker commands.
