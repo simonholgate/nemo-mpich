@@ -1,10 +1,10 @@
 # README for nemo-mpich
-## Simon Holgate <hello@simonholgate.org.uk>
+Simon Holgate: <hello@simonholgate.org.uk>
 
-This repository is based upon origin work by Pierre DERIAN 
+This repository is based upon original work by Pierre Derian: 
 <contact@pierrederian.net> (https://github.com/pderian/NEMOGCM-Docker)
-and Nikyle Nguyen <simonholgate@MSN.com> 
-(https://github.com/simonholgate/nemo-mpich) 
+and Nikyle Nguyen <NLKNguyen@MSN.com> 
+(https://github.com/NLKNguyen/alpine-mpich) 
 
 ### Purpose: 
 Docker container based on Debian Jessie image with [MPICH](http://www.mpich.org/) -- portable implementation of Message Passing Interface (MPI) standard -- to compile and run the NEMO ocean engine with parallel processing.
@@ -69,8 +69,47 @@ $ docker build -t eu.gcr.io/bobeas-hpc/nemo/xios xios/
 $ docker build -t eu.gcr.io/bobeas-hpc/nemo/onbuild onbuild/
 ```
 
-Since the onbuild image inherits the base image, if you use a different tag name (`eu.gcr.io/nemo`), you must change the first line in `xios/Dockerfile` and `onbuild/Dockerfile` to inherits `FROM` your custom tag name.
+Since the onbuild image inherits the base image, if you use a different tag name (`eu.gcr.io/bobeas-hpc/nemo`), you must change the first line in `xios/Dockerfile` and `onbuild/Dockerfile` to inherits `FROM` your custom tag name.
 
 ----
 
 
+## Build Customization
+
+In order to customize the base image at build time, you need to download the Dockerfile source code and build with optional build arguments (without those, you get the exact image as you pull from eu.gcr.io), for example:
+
+```sh
+$ git clone https://github.com/simonholgate/nemo-mpich
+
+$ cd nemo-mpich
+
+$ docker build --build-arg MPICH_VERSION="3.2b4" -t my-custom-image base/
+
+$ docker build --build-arg NEMO_CONFIG="INDIAN_OCEAN" -t my-custom-image xios/
+
+$ docker build --build-arg NEMO_CONFIG="INDIAN_OCEAN" NEMO_USER="mpi" -t my-custom-image onbuild/
+```
+These are available **build arguments** to customize the build:
+- `REQUIRE` *space-separated names of packages to be installed from Debian Jessie main [package repository](https://packages.debian.org/jessie/) before downloading and installing MPICH. Default=`"sudo make gcc g++ binutils file libc-dev ssh m4 libtool automake autoconf bzip2 bash"`*
+- `MPICH_VERSION` *to find which version of MPICH to download from [here](http://www.mpich.org/static/downloads/). Default=`"3.2"`*
+- `MPICH_CONFIGURE_OPTIONS` *to be passed to `./configure` in MPICH source directory. Default is empty*
+- `MPICH_MAKE_OPTIONS` *to be passed to `make` after the above command. Default is empty*
+- `NEMO_USER` *non-root user with sudo privilege and no password required. Default=`mpi`*
+- `WORKDIR` *main working directory to be owned by default user. Default=`/project`*
+
+*See MPICH documentation for available options*
+
+Should you need more than that, you need to change the Dockerfile yourself or send suggestion/pull requests to this GitHub repository.
+
+You may also wish to edit the xios/Dockerfile directly to change the revision of NEMO that is built and/or the version of XIOS.
+
+## Issue
+
+Use this GitHub repository [issues](https://github.com/simonholgate/nemo-mpich/issues)
+
+## Contributing
+
+Suggestions and pull requests are awesome.
+
+# License MIT
+Copyright © Simon Holgate
