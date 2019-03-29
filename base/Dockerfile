@@ -17,12 +17,9 @@ MAINTAINER Simon Holgate <hello@simonholgate.org.uk>
 
 ARG REQUIRE="sudo make gcc g++ binutils file libc-dev ssh m4 libtool automake autoconf bzip2 bash"
 ARG PACKAGES="wget bzip2 ca-certificates zlib1g zlib1g-dev libcurl3-openssl-dev libcurl3 git gfortran" 
-#ARG PACKAGES_NEMO="perl gfortran" 
-#ARG PACKAGES_XIOS="liburi-perl" 
-#ARG PACKAGES_USER="vim"
+
 RUN apt-get update && apt-get upgrade --no-install-recommends -y \
       && apt-get install  --no-install-recommends -y ${REQUIRE} ${PACKAGES} 
-#      ${PACKAGES_NEMO} \ ${PACKAGES_XIOS} ${PACKAGES_USER} 
 
 
 #### INSTALL MPICH ####
@@ -128,5 +125,3 @@ RUN git clone https://github.com/Unidata/netcdf-fortran.git \
       && ./configure ${NCDFF_CONFIGURE_OPTIONS}  \
       && make check && make install \
       && rm -rf /tmp/netcdff-src
-
-

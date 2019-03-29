@@ -2,7 +2,8 @@
 
 # The MIT License (MIT)
 #
-# Copyright (c) 2016 Nikyle Nguyen
+# Original alpine-mpich code copyright (c) 2016 Nikyle Nguyen
+# Modifications for BoBEAS NEMO project copyright (c) 2019 Simon Holgate
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Origin: https://github.com/NLKNguyen/alpine-mpich
+# Origin: https://github.com/simonholgate/bobeas-nemo-mpich
 
 set -e
 
@@ -46,7 +47,7 @@ SIZE=4
 #############################################
 usage ()
 {
-    echo " Alpine MPICH Cluster (for Docker Compose on single Docker host)"
+    echo " NEMO MPICH Cluster (for Docker Compose on single Docker host)"
     echo ""
     echo " USAGE: ./cluster.sh [COMMAND] [OPTIONS]"
     echo ""

@@ -34,5 +34,5 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: "addr=10.193.200.114,nolock,soft,rw"       # IP of nfs server.  This is also where you put any options '-o' in standard option format
-      device: ":/vol1/crisc"  # location on nfs server of file/dir you want to mount
+      o: "addr=${NFS_HOST_ADDR},nolock,soft,rw" # IP of nfs server from .env. This is also where you put any options '-o' in standard option format
+      device: ":/vol1/bobeas"  # location on nfs server of file/dir you want to mount
