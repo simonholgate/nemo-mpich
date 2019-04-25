@@ -1,10 +1,10 @@
 NEMO MPICH Cluster
 ====================
 
-Scaffolding project structure for a MPI cluster using [Alpine MPICH](https://hub.docker.com/r/nlknguyen/alpine-mpich) Docker image. Architecturally compatible with *Docker Swarm Mode*. Include a runner script that automates Docker commands.
+Scaffolding project structure for a MPI cluster using [NEMO MPICH](http://eu.gcr.io/bobeas-hpc/nemo) Docker image. Architecturally compatible with *Docker Swarm Mode*. Include a runner script that automates Docker commands.
 
 Original software targets:
-- Docker Engine version 1.12.1
+- Docker Engine version 18.09.1
 
 
 Currently, this directory provides two ways to orchestrate the cluster (with different files requirement):
@@ -12,11 +12,11 @@ Currently, this directory provides two ways to orchestrate the cluster (with dif
 + Using Docker Swarm Mode for real production environment across multiple Docker hosts.
 
 
-# For single-host with Docker Compose 
+# For single-host with Docker Compose - IN DEVELOPMENT
 
 Require **Docker Compose**; target version 1.8.0
 
-Documentation: [wiki](https://github.com/NLKNguyen/alpine-mpich/wiki/Single-Host-Orchestration)
+Documentation: [alpine-mpich wiki](https://github.com/NLKNguyen/alpine-mpich/wiki/Single-Host-Orchestration)
 
 Relevant files:
 
@@ -33,11 +33,11 @@ cluster
 └── cluster.sh          # Commands wrapper ultility
 ```
 
-# For multi-host with Docker Swarm Mode
+# For multi-host with Docker Swarm Mode - TESTED AND WORKING
 
 Require being on a **Docker Swarm** manager (could be a single local machine) and having access to an image registry (could use Docker Hub) 
 
-Documentation: [wiki](https://github.com/NLKNguyen/alpine-mpich/wiki/Multi-Host-Orchestration)
+Documentation: [alpine-mpich wiki](https://github.com/NLKNguyen/alpine-mpich/wiki/Multi-Host-Orchestration)
 
 Relevant files:
 
