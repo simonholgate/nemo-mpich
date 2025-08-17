@@ -1,7 +1,7 @@
 ### Installs the framework for the NEMO Ocean Engine compilation ###
 ####################################################################
 
-FROM eu.gcr.io/bobeas-hpc/debian:jessie as builder
+FROM us-west1-docker.pkg.dev/nemo-mpich/bobeas-hpc/debian/jessie:v20250814 AS builder
 
 MAINTAINER Simon Holgate <hello@simonholgate.org.uk>
 
@@ -15,7 +15,7 @@ MAINTAINER Simon Holgate <hello@simonholgate.org.uk>
 # ssh is required in order for MPI to run properly
 # nano, python2.7 are not mandatory but useful when we have to work in the container
 
-ARG REQUIRE="sudo make gcc g++ binutils file libc-dev ssh m4 libtool automake autoconf bzip2 bash"
+ARG REQUIRE="sudo make gcc g++ binutils file libc-dev ssh m4 libtool automake autoconf bzip2 bash libxml2-dev"
 ARG PACKAGES="wget bzip2 ca-certificates zlib1g zlib1g-dev libcurl3-openssl-dev libcurl3 git gfortran" 
 
 RUN apt-get update && apt-get upgrade --no-install-recommends -y \
@@ -103,6 +103,7 @@ WORKDIR /tmp/netcdf-src/netcdf-c
 RUN autoreconf -i
 COPY fix_tst_cdf5format_for_loop.patch .
 #RUN git apply fix_tst_cdf5format_for_loop.patch \
+ARG CFLAGS="$CFLAGS -std=gnu99"
 RUN ./configure ${NCDF_CONFIGURE_OPTIONS}  \
       && make check && make install \
       && rm -rf /tmp/netcdf-src
