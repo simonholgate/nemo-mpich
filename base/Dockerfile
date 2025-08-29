@@ -89,21 +89,22 @@ RUN wget https://parallel-netcdf.github.io/Release/parallel-netcdf-${PNCDF_VERSI
       && rm -rf /tmp/pnetcdf-src
 
 #### INSTALL NETCDF-C ####
-ARG NCDF_COMMIT="56f9489"
+#ARG NCDF_COMMIT="56f9489"
+ARG NCDF_COMMIT="6834f41"
 ARG NCDFDIR=/usr/local
 ARG NCDF_CONFIGURE_OPTIONS="--enable-parallel-tests --enable-pnetcdf \
-      --prefix=${NCDFDIR}"
+      --prefix=${NCDFDIR} --disable-dap-remote-tests"
 
 # Download, build, and install PNetCDF
 RUN mkdir /tmp/netcdf-src
 WORKDIR /tmp/netcdf-src
 RUN git clone https://github.com/Unidata/netcdf-c.git
 WORKDIR /tmp/netcdf-src/netcdf-c 
-#RUN git reset --hard ${NCDF_COMMIT} 
+RUN git reset --hard ${NCDF_COMMIT} 
 RUN autoreconf -i
 COPY fix_tst_cdf5format_for_loop.patch .
-#RUN git apply fix_tst_cdf5format_for_loop.patch \
 ARG CFLAGS="$CFLAGS -std=gnu99"
+#RUN git apply fix_tst_cdf5format_for_loop.patch \
 RUN ./configure ${NCDF_CONFIGURE_OPTIONS}  \
       && make check && make install \
       && rm -rf /tmp/netcdf-src

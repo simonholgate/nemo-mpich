@@ -1,7 +1,7 @@
 ### Installs the framework for the NEMO Ocean Engine compilation ###
 ####################################################################
-FROM eu.gcr.io/bobeas-hpc/nemo/base:latest as base
-FROM eu.gcr.io/bobeas-hpc/debian:jessie as xios
+FROM us-west1-docker.pkg.dev/nemo-mpich/bobeas-hpc/nemo/base:v20250814 AS base
+FROM us-west1-docker.pkg.dev/nemo-mpich/bobeas-hpc/debian/jessie:v20250814 AS xios
 
 # Based on NEMO-Docker by Pierre Derian, contact@pierrederian.net, www.pierrederian.net
 MAINTAINER Simon Holgate <hello@simonholgate.org.uk> 
